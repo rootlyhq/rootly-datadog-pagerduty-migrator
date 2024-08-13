@@ -2,9 +2,8 @@
   "name": "rootly-datadog-pagerduty-migrator",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "Alexander Mingoia <alex@alexmingoia.com>",
-  "license": "Unlicensed",
-  "private": true,
+  "author": "Rootly <support@rootly.com>",
+  "license": "MIT",
   "dependencies": {
     "axios": "^1.7.3",
     "dotenv": "^16.4.5"
