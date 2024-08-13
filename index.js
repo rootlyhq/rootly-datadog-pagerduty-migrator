@@ -2,7 +2,7 @@ const axios = require('axios');
 require('dotenv').config();
 
 // Validate environment variables
-const requiredEnvVars = ['DATADOG_API_KEY', 'DATADOG_APP_KEY', 'PAGERDUTY_API_TOKEN', 'ROOTLY_API_TOKEN'];
+const requiredEnvVars = ['DATADOG_API_KEY', 'DATADOG_APP_KEY', 'PAGERDUTY_API_TOKEN', 'ROOTLY_API_TOKEN', 'ROOTLY_ALERT_SOURCE_SECRET'];
 requiredEnvVars.forEach(envVar => {
   if (!process.env[envVar]) {
     console.error(`Missing environment variable: ${envVar}`);
@@ -14,6 +14,7 @@ const DATADOG_API_KEY = process.env.DATADOG_API_KEY;
 const DATADOG_APP_KEY = process.env.DATADOG_APP_KEY;
 const PAGERDUTY_API_TOKEN = process.env.PAGERDUTY_API_TOKEN;
 const ROOTLY_API_TOKEN = process.env.ROOTLY_API_TOKEN;
+const ROOTLY_ALERT_SOURCE_SECRET = process.env.ROOTLY_ALERT_SOURCE_SECRET
 
 const DATADOG_API_URL = 'https://api.datadoghq.com/api/v1';
 const PAGERDUTY_API_URL = 'https://api.pagerduty.com';
@@ -166,7 +167,8 @@ async function createDatadogWebhook(serviceName, serviceId) {
   try {
     await axiosInstance.post(`${DATADOG_API_URL}/integration/webhooks/configuration/webhooks`, {
       name: `rootly-${normalizedServiceName(serviceName)}`,
-      url: `https://webhooks.rootly.com/webhooks/incoming/datadog_webhooks/notify/service/${serviceId}`
+      url: `https://webhooks.rootly.com/webhooks/incoming/datadog_webhooks/notify/service/${serviceId}`,
+      custom_headers: JSON.stringify({secret: ROOTLY_ALERT_SOURCE_SECRET})
     }, {
       headers: {
         'DD-API-KEY': DATADOG_API_KEY,
