@@ -176,7 +176,7 @@ async function createDatadogWebhook(serviceName, serviceId) {
     console.log(`Datadog webhook created for service: ${serviceName}`);
   } catch (error) {
     if (error.response.data.errors[0] === "Webhook already exists") {
-      console.log(`Webhook already exists: @webhooks-rootly-${normalizedServiceName(serviceName)}`)
+      console.log(`Webhook already exists: @webhook-rootly-${normalizedServiceName(serviceName)}`)
     } else {
       console.error('Error creating Datadog webhook:', error, error.response.data);
     }
@@ -222,8 +222,8 @@ async function updateDatadogMonitor(monitorId, oldNotification, newNotification)
 
 async function processMonitor(monitor) {
   try {
-    if (monitor.message.match(/@webhooks-rootly-[^\s]+/)) {
-      console.log(`Skipping monitor ID: ${monitor.id} as it already contains @webhooks-rootly.`);
+    if (monitor.message.match(/@webhook-rootly-[^\s]+/)) {
+      console.log(`Skipping monitor ID: ${monitor.id} as it already contains @webhook-rootly.`);
       return;
     }
 
@@ -239,7 +239,7 @@ async function processMonitor(monitor) {
           const rootlyId = await fetchRootlyServiceId(pagerdutyId);
           if (rootlyId) {
             await createDatadogWebhook(serviceName, rootlyId);
-            const newNotification = `@webhooks-rootly-${serviceName}`;
+            const newNotification = `@webhook-rootly-${serviceName}`;
             await updateDatadogMonitor(monitor.id, notification, newNotification);
           } else {
             console.error(`Rootly ID not found for PagerDuty ID: ${pagerdutyId}`);
