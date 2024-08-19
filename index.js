@@ -342,11 +342,11 @@ async function processMonitor(monitor) {
 }
 
 function resultsCSV() {
-  const headers = ['Monitor', 'Monitor Name', 'Notification', 'Notification to append', 'Monitor message', 'New monitor message', 'Error']; 
+  const headers = ['Monitor', 'Monitor Name', 'Monitor JSON', 'Notification', 'Notification to append', 'Monitor message', 'New monitor message', 'Error'];
   const csv = [headers];
 
   results.forEach((result) => {
-    csv.push([result.monitor?.id?.toString() || "", result.monitor?.name || "", result.old || "", result.new || "", result.oldMessage || "", result.newMessage || "", result.error || ""])
+    csv.push([result.monitor?.id?.toString() || "", result.monitor?.name || "", result.monitor ? JSON.stringify(result.monitor) : "", result.old || "", result.new || "", result.oldMessage || "", result.newMessage || "", result.error || ""])
   })
 
   return csv.map((row) => row.map((cell) => `"${cell.replace(/"/g, '""')}"`).join(',')).join('\n');
