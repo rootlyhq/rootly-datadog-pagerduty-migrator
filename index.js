@@ -316,7 +316,7 @@ async function processMonitor(monitor) {
           const rootlyId = await fetchRootlyServiceId(pagerdutyId);
           if (rootlyId) {
             await createDatadogWebhook(serviceName, rootlyId);
-            const newNotification = `@webhook-rootly-${serviceName}`;
+            const newNotification = `@webhook-rootly-${normalizedServiceName(serviceName)}`;
             results.push({monitor: monitor, old: notification, new: newNotification, error: null});
             return [notification, newNotification];
           } else {
