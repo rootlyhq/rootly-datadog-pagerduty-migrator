@@ -133,7 +133,7 @@ async function fetchAndCacheRootlyServices() {
 async function fetchDatadogMonitors() {
   console.log('Fetching Datadog monitors...');
   const monitors = [];
-  let page = 1;
+  let page = 0;
   const page_size = 100; // Number of monitors to fetch per page
 
   while (true) {
