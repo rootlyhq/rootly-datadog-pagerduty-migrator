@@ -14,3 +14,7 @@ Appends `@webhook-rootly-[serviceName]` to every Datadog monitor containing `@pa
 
     yarn install
     node index.js
+
+### Options
+
+Perform a dry run by setting `DRY_RUN=true` environment variable
