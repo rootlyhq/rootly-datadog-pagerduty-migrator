@@ -1,3 +1,7 @@
-.env**
-**DS_Store
+.env
+.env.*
+!.env.example
+.DS_Store
 node_modules/
+run-*.csv
+.yarn/install-state.gz
